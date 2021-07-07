@@ -1,14 +1,16 @@
 <template>
   <div id="app">
+    <radar-chart />
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+import RadarChart from './components/RadarChart.vue'
 
 export default {
   name: 'App',
   components: {
+    RadarChart
   }
 }
 </script>
