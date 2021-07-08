@@ -10,8 +10,17 @@
 import * as d3 from 'd3'
 
 export default {
-  props: [],
-  name: 'radar-chart',
+  name: 'RadarChart',
+  props: {
+    data: {
+      type: Array,
+      required: true
+    },
+    options: {
+      type: Object,
+      required: true
+    }
+  },
   methods: {
     RadarChartConstructor(parent_selector, data, options) {
 
@@ -56,11 +65,11 @@ export default {
         labelFactor: 1.25, 	//How much farther than the radius of the outer circle should the labels be placed
         wrapWidth: 60, 		//The number of pixels after which a label needs to be given a new line
         opacityArea: 0.35, 	//The opacity of the area of the blob
-        dotRadius: 4, 			//The size of the colored circles of each blog
+        dotRadius: 2, 			//The size of the colored circles of each blog
         opacityCircles: 0.1, 	//The opacity of the circles of each blob
         strokeWidth: 2, 		//The width of the stroke around each blob
         roundStrokes: false,	//If true the area and stroke will follow a round path (cardinal-closed)
-        color: d3.scaleOrdinal(d3.schemeCategory10),	//Color function,
+        color: d3.scaleOrdinal(d3.schemePastel1),	//Color function,
         format: '.2%',
         unit: '',
         legend: false
@@ -328,49 +337,18 @@ export default {
     }
   },
   mounted() {
-    /*const dataEnglishLevel = [
-      {
-        name: 'English Level of Front-End Department',
-        axes: [
-          {
-            axis: 'Alexandr',
-            value: 4,
-          },
-          {
-            axis: 'Dmitriy',
-            value: 5,
-          },
-          {
-            axis: 'Nikita',
-            value: 4,
-          },
-          {
-            axis: 'Olga',
-            value: 4,
-          },
-          {
-            axis: 'Tatiana',
-            value: 5,
-          },
-          {
-            axis: 'Yevhenii',
-            value: 3,
-          },
-          {
-            axis: 'Nikolay',
-            value: 3,
-          },
-          {
-            axis: 'Vlada',
-            value: 3,
-          },
-          {
-            axis: 'Sergey',
-            value: 3,
-          },
-        ]
-      },
-    ]*/
+
+    const colors = ["#2a2fd4", "#0099FF", "#33FFFF"]
+    const colors2 = ["#AFC52F", "#ff6600", "#2a2fd4"]
+    const colors3 = ["#26AF32", "#b90e0a", "#2a2fd4"]
+
+    //////////////////////// Set-Up //////////////////////////////
+
+    const margin = { top: 50, right: 230, bottom: 50, left: 80 },
+        width = Math.min(700, window.innerWidth / 4) - this.options.margin.left - this.options.margin.right,
+        height = Math.min(width, window.innerHeight - this.options.margin.top - this.options.margin.bottom);
+
+    ////////////////////////// Data //////////////////////////////
     const dataEnglishLevel = [
       {
         name: 'Alexandr',
@@ -811,56 +789,6 @@ export default {
       },
     ]
 
-    const colors = ["#2a2fd4", "#0099FF", "#33FFFF"]
-    const colors2 = ["#AFC52F", "#ff6600", "#2a2fd4"]
-    const colors3 = ["#26AF32", "#b90e0a", "#2a2fd4"]
-
-    //////////////////////// Set-Up //////////////////////////////
-
-    const margin = { top: 50, right: 230, bottom: 50, left: 80 },
-        width = Math.min(700, window.innerWidth / 4) - margin.left - margin.right,
-        height = Math.min(width, window.innerHeight - margin.top - margin.bottom);
-
-    ////////////////////////// Data //////////////////////////////
-
-    const data = [
-      { name: 'Allocated budget',
-        axes: [
-          {axis: 'Sales', value: 42},
-          {axis: 'Marketing', value: 20},
-          {axis: 'Development', value: 60},
-          {axis: 'Customer Support', value: 26},
-          {axis: 'Information Technology', value: 35},
-          {axis: 'Administration', value: 20}
-        ],
-        color: '#26AF32'
-      },
-      { name: 'Actual Spending',
-        axes: [
-          {axis: 'Sales', value: 50},
-          {axis: 'Marketing', value: 45},
-          {axis: 'Development', value: 20},
-          {axis: 'Customer Support', value: 20},
-          {axis: 'Information Technology', value: 25},
-          {axis: 'Administration', value: 23}
-        ],
-        color: '#762712'
-      },
-      { name: 'Further Test',
-        axes: [
-          {axis: 'Sales', value: 32},
-          {axis: 'Marketing', value: 62},
-          {axis: 'Development', value: 35},
-          {axis: 'Customer Support', value: 10},
-          {axis: 'Information Technology', value: 20},
-          {axis: 'Administration', value: 28}
-        ],
-        color: '#2a2fd4'
-      }
-    ];
-
-    console.log(data[0].color);
-
     ////// First example /////////////////////////////////////////
     ///// (not so much options) //////////////////////////////////
 
@@ -870,8 +798,12 @@ export default {
       margin: margin,
       levels: 6,
       roundStrokes: false,
-      color: d3.scaleOrdinal().range(colors),
+      color: d3.scaleOrdinal(d3.schemeBlues[this.data.length]),
       legend: { title: 'Front-end Department', translateX: 230, translateY: 40 },
+      opacityArea: 0.35, 	//The opacity of the area of the blob
+      dotRadius: 0, 			//The size of the colored circles of each blog
+      opacityCircles: 0.1, 	//The opacity of the circles of each blob
+      strokeWidth: 2, 		//The width of the stroke around each blob
       format: '.0f'
     };
 
@@ -888,7 +820,7 @@ export default {
       // maxValue: 5,
       levels: 5,
       roundStrokes: false,
-      color: d3.scaleOrdinal().range(colors),
+      // color: d3.scaleOrdinal().range(colors),
       format: '.0f',
       legend: { title: 'English Level of Front-End Department', translateX: 230, translateY: 40 },
       // unit: '$'
@@ -897,7 +829,11 @@ export default {
     // Draw the chart, get a reference the created svg element :
 
     // const parent_container = this.$refs.chartContainer
-    let svg_radar2 = this.RadarChartConstructor(".radarChart2", dataEnglishLevel, radarChartOptions2);
+    let svg_radar2 = this.RadarChartConstructor(".radarChart2", this.data, this.options);
+
+    setTimeout(() => {
+      // this.RadarChartConstructor(".radarChart2", dataGoToTeam, radarChartOptions)
+    }, 2000)
   }
 }
 </script>

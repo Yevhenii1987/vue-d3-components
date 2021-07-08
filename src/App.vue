@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <radar-chart />
+    <Home />
   </div>
 </template>
 
 <script>
-import RadarChart from './components/RadarChart.vue'
+import Home from './components/Home.vue'
 
 export default {
   name: 'App',
   components: {
-    RadarChart
-  }
+    Home
+  },
 }
 </script>
 
