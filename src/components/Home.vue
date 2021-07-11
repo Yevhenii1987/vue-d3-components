@@ -21,7 +21,7 @@
           w: 290,				//Width of the circle
           h: 350,				//Height of the circle
           margin: { top: 50, right: 230, bottom: 50, left: 80 }, //The margins of the SVG
-          levels: 5,				//How many levels or inner circles should there be drawn
+          levels: 6,				//How many levels or inner circles should there be drawn
           roundStrokes: false,  //If true the area and stroke will follow a round path (cardinal-closed)
           format: '.0f',        //labels format
           legend: { title: 'English Level of Front-End Department', translateX: 230, translateY: 40 },
@@ -68,7 +68,7 @@
             axes: [
               {
                 axis: 'reading',
-                value: 4,
+                value: 6,
               },
               {
                 axis: 'grammar',

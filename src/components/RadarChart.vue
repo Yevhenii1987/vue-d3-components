@@ -22,7 +22,7 @@ export default {
     }
   },
   methods: {
-    RadarChartConstructor(parent_selector, data, options) {
+    RadarChartConstructor(parent_selector, data, options, legendMouseOver) {
 
       const max = Math.max;
       const sin = Math.sin;
@@ -94,6 +94,7 @@ export default {
         }
       }
       maxValue = max(cfg.maxValue, maxValue);
+      console.log(maxValue)
 
       const allAxis = data[0].axes.map((i, j) => i.axis),	//Names of each axis
           total = allAxis.length,					//The number of different axes
@@ -271,13 +272,13 @@ export default {
           .attr("cy", (d,i) => rScale(d.value) * sin(angleSlice*i - HALF_PI))
           .style("fill", "none")
           .style("pointer-events", "all")
-          .on("mouseover", function(d,i) {
+          .on("mouseover", function(event, d) {
             tooltip
                 .attr('x', this.cx.baseVal.value - 10)
                 .attr('y', this.cy.baseVal.value - 10)
                 .transition()
                 .style('display', 'block')
-                .text(Format(d.value) + cfg.unit);
+                .text('level - ' + Format(d.value) + cfg.unit);
           })
           .on("mouseout", function(){
             tooltip.transition()
@@ -330,7 +331,28 @@ export default {
             .attr("y", (d,i) => i * 20 + 9)
             .attr("font-size", "11px")
             .attr("fill", "#737373")
-            .text(d => d);
+            .style("cursor", "context-menu")
+            .text(d => d)
+            .on("mouseover", function(event, d, i) {
+              console.log('d:' + d)
+              // g.selectAll(".radarWrapper").each((data, index) => {
+              //   console.log(d3.select(this))
+              //   // console.log(d)
+              //   console.log('data: ' + data.name)
+              //   // console.log(index)
+              //   if(data.name !== d) {
+              //     console.log('wwwww')
+              //     d3.select(this).style({
+              //       opacity: 0,
+              //       pointerEvents: "none"
+              //     })
+              //   }
+              // })
+            })
+            .on("mouseout", function(){
+              tooltip.transition()
+                .style('display', 'none').text('');
+            });
       }
       return svg;
 
@@ -832,7 +854,7 @@ export default {
     let svg_radar2 = this.RadarChartConstructor(".radarChart2", this.data, this.options);
 
     setTimeout(() => {
-      // this.RadarChartConstructor(".radarChart2", dataGoToTeam, radarChartOptions)
+      // this.RadarChartConstructor(".radarChart2", dataGoToTeam,  this.options)
     }, 2000)
   }
 }
@@ -860,6 +882,9 @@ text {
 }
 .tick line {
   stroke: #c0c0bb
+}
+.legend text {
+  cursor: pointer;
 }
 .domain {
   stroke: #c0c0bb
