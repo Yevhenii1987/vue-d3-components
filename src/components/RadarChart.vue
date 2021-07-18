@@ -1,7 +1,13 @@
 <template>
   <div>
-    <div class="radarChart1" style="display: inline-flex;"></div>
-    <div class="radarChart2" style="display: inline-flex;"></div>
+    <div 
+      class="radarChart1"
+      style="display: inline-flex;"
+    />
+    <div
+      class="radarChart2"
+      style="display: inline-flex;"
+    />
   </div>
 </template>
 
@@ -20,6 +26,226 @@ export default {
       type: Object,
       required: true
     }
+  },
+  mounted() {
+
+    //////////////////////// Set-Up //////////////////////////////
+
+    const margin = { top: 50, right: 230, bottom: 50, left: 80 };
+    // const width = Math.min(700, window.innerWidth / 4) - this.options.margin.left - this.options.margin.right;
+    // const height = Math.min(width, window.innerHeight - this.options.margin.top - this.options.margin.bottom);
+
+    ////////////////////////// Data //////////////////////////////
+    const dataGoToTeam = [
+      {
+        name: 'Alexandr',
+        axes: [
+          {
+            axis: 'English',
+            value: 4,
+          },
+          {
+            axis: 'Javascript',
+            value: 4,
+          },
+          {
+            axis: 'HTML',
+            value: 5,
+          },
+          {
+            axis: 'CSS',
+            value: 5,
+          },
+          {
+            axis: 'Vue',
+            value: 4,
+          },
+          {
+            axis: 'React',
+            value: 2,
+          },
+        ]
+      },
+      // {
+      //   name: 'Dmitriy',
+      //   axes: [
+      //     {
+      //       axis: 'English',
+      //       value: 4,
+      //     },
+      //     {
+      //       axis: 'Javascript',
+      //       value: 5,
+      //     },
+      //     {
+      //       axis: 'HTML',
+      //       value: 5,
+      //     },
+      //     {
+      //       axis: 'CSS',
+      //       value: 5,
+      //     },
+      //     {
+      //       axis: 'Vue',
+      //       value: 5,
+      //     },
+      //     {
+      //       axis: 'React',
+      //       value: 3,
+      //     },
+      //   ]
+      // },
+      // {
+      //   name: 'Yevhenii',
+      //   axes: [
+      //     {
+      //       axis: 'English',
+      //       value: 3,
+      //     },
+      //     {
+      //       axis: 'Javascript',
+      //       value: 3,
+      //     },
+      //     {
+      //       axis: 'HTML',
+      //       value: 4,
+      //     },
+      //     {
+      //       axis: 'CSS',
+      //       value: 5,
+      //     },
+      //     {
+      //       axis: 'Vue',
+      //       value: 2,
+      //     },
+      //     {
+      //       axis: 'React',
+      //       value: 1,
+      //     },
+      //   ]
+      // },
+      // {
+      //   name: 'Nikita',
+      //   axes: [
+      //     {
+      //       axis: 'English',
+      //       value: 4,
+      //     },
+      //     {
+      //       axis: 'Javascript',
+      //       value: 4,
+      //     },
+      //     {
+      //       axis: 'HTML',
+      //       value: 5,
+      //     },
+      //     {
+      //       axis: 'CSS',
+      //       value: 4,
+      //     },
+      //     {
+      //       axis: 'Vue',
+      //       value: 1,
+      //     },
+      //     {
+      //       axis: 'React',
+      //       value: 4,
+      //     },
+      //   ]
+      // },
+      // {
+      //   name: 'Olga',
+      //   axes: [
+      //     {
+      //       axis: 'English',
+      //       value: 4,
+      //     },
+      //     {
+      //       axis: 'Javascript',
+      //       value: 3,
+      //     },
+      //     {
+      //       axis: 'HTML',
+      //       value: 5,
+      //     },
+      //     {
+      //       axis: 'CSS',
+      //       value: 5,
+      //     },
+      //     {
+      //       axis: 'Vue',
+      //       value: 0,
+      //     },
+      //     {
+      //       axis: 'React',
+      //       value: 0,
+      //     },
+      //   ]
+      // },
+      // {
+      //   name: 'Tatiana',
+      //   axes: [
+      //     {
+      //       axis: 'English',
+      //       value: 5,
+      //     },
+      //     {
+      //       axis: 'Javascript',
+      //       value: 3,
+      //     },
+      //     {
+      //       axis: 'HTML',
+      //       value: 4,
+      //     },
+      //     {
+      //       axis: 'CSS',
+      //       value: 4,
+      //     },
+      //     {
+      //       axis: 'Vue',
+      //       value: 2,
+      //     },
+      //     {
+      //       axis: 'React',
+      //       value: 0,
+      //     },
+      //   ]
+      // },
+    ]
+
+    ////// First example /////////////////////////////////////////
+    ///// (not so much options) //////////////////////////////////
+
+    const radarChartOptions = {
+      w: 290,
+      h: 350,
+      margin: margin,
+      levels: 6,
+      roundStrokes: false,
+      // color: d3.scaleOrdinal(d3.schemeBlues[this.data.length]),
+      color: d3.scaleOrdinal('blue'),
+      legend: { title: 'Front-end Department', translateX: 230, translateY: 40 },
+      opacityArea: 0.35, 	//The opacity of the area of the blob
+      dotRadius: 5, 			//The size of the colored circles of each blog
+      opacityCircles: 0.1, 	//The opacity of the circles of each blob
+      strokeWidth: 2, 		//The width of the stroke around each blob
+      format: '.0f',
+      // unit: '$'
+    };
+
+    // Draw the chart, get a reference the created svg element :
+    // eslint-disable-next-line no-unused-vars
+    let svg_radar1 = this.RadarChartConstructor(".radarChart1", dataGoToTeam, radarChartOptions);
+
+    // Draw the chart, get a reference the created svg element :
+
+    // const parent_container = this.$refs.chartContainer
+    // eslint-disable-next-line no-unused-vars
+    let svg_radar2 = this.RadarChartConstructor(".radarChart2", this.data, this.options);
+
+    setTimeout(() => {
+      // this.RadarChartConstructor(".radarChart2", dataGoToTeam,  this.options)
+    }, 2000)
   },
   methods: {
     RadarChartConstructor(parent_selector, data, options, legendMouseOver) {
@@ -43,7 +269,9 @@ export default {
               dy = parseFloat(text.attr("dy")),
               tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
 
-          while (word = words.pop()) {
+          word = words.pop();
+          while (word) {
+            word = words.pop();
             line.push(word);
             tspan.text(line.join(" "));
             if (tspan.node().getComputedTextLength() > width) {
@@ -78,7 +306,8 @@ export default {
       //Put all of the options into a variable called cfg
       if('undefined' !== typeof options){
         for(let i in options){
-          if('undefined' !== typeof options[i]){ cfg[i] = options[i]; }
+          // eslint-disable-next-line no-prototype-builtins
+          if('undefined' !== typeof options[i] && options.hasOwnProperty(i)) { cfg[i] = options[i]; }
         }//for i
       }//if
 
@@ -103,9 +332,24 @@ export default {
           angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
 
       //Scale for the radius
+      //   .range(['A1','A2','B1','B2','C1','C2'])
+      //   .domain([1, 6]);
       const rScale = d3.scaleLinear()
-          .range([0, radius])
-          .domain([0, maxValue]);
+        .range([0, radius])
+        .domain([0, maxValue]);
+
+      const wScale = d3.scaleLinear()
+        // .range(['A1','A2','B1','B2','C1','C2'])
+        .range(['A','B','C','D','E','F'])
+        .domain([1, 2, 3, 4, 5, 6]);
+
+      console.log(wScale(1));
+      console.log(wScale(2));
+      console.log(wScale(3));
+      console.log(wScale(4));
+      console.log(wScale(5));
+      console.log(wScale(6));
+
 
       //////////// Create the container SVG and g /////////////
 
@@ -152,15 +396,43 @@ export default {
 
       //Text indicating at what % each level is
       axisGrid.selectAll(".axisLabel")
-          .data(d3.range(1,(cfg.levels+1)).reverse())
+          .data(() => {
+            return [
+              {
+                val: 1,
+                name: 'A1'
+              },
+              {
+                val: 2,
+                name: 'A2'
+              },
+              {
+                val: 3,
+                name: 'B1'
+              },
+              {
+                val: 4,
+                name: 'B2'
+              },
+              {
+                val: 5,
+                name: 'C1'
+              },
+              {
+                val: 6,
+                name: 'C2'
+              },
+            ]
+          })
           .enter().append("text")
           .attr("class", "axisLabel")
           .attr("x", 4)
-          .attr("y", d => -d * radius / cfg.levels)
+          .attr("y", d => -d.val * radius / cfg.levels)
           .attr("dy", "0.4em")
           .style("font-size", "10px")
           .attr("fill", "#737373")
-          .text(d => Format(maxValue * d / cfg.levels) + cfg.unit);
+          .text(d => d.name);
+          // .text(d => Format(maxValue * d / cfg.levels) + cfg.unit);
 
       //////////////////// Draw the axes //////////////////////
 
@@ -357,505 +629,6 @@ export default {
       return svg;
 
     }
-  },
-  mounted() {
-
-    const colors = ["#2a2fd4", "#0099FF", "#33FFFF"]
-    const colors2 = ["#AFC52F", "#ff6600", "#2a2fd4"]
-    const colors3 = ["#26AF32", "#b90e0a", "#2a2fd4"]
-
-    //////////////////////// Set-Up //////////////////////////////
-
-    const margin = { top: 50, right: 230, bottom: 50, left: 80 },
-        width = Math.min(700, window.innerWidth / 4) - this.options.margin.left - this.options.margin.right,
-        height = Math.min(width, window.innerHeight - this.options.margin.top - this.options.margin.bottom);
-
-    ////////////////////////// Data //////////////////////////////
-    const dataEnglishLevel = [
-      {
-        name: 'Alexandr',
-        axes: [
-          {
-            axis: 'reading',
-            value: 5,
-          },
-          {
-            axis: 'grammar',
-            value: 4,
-          },
-          {
-            axis: 'vocabulary',
-            value: 4,
-          },
-          {
-            axis: 'listening',
-            value: 5,
-          },
-          {
-            axis: 'writing',
-            value: 4,
-          },
-          {
-            axis: 'speaking',
-            value: 4,
-          }
-        ]
-      },
-      {
-        name: 'Dmitriy',
-        axes: [
-          {
-            axis: 'reading',
-            value: 4,
-          },
-          {
-            axis: 'grammar',
-            value: 5,
-          },
-          {
-            axis: 'vocabulary',
-            value: 4,
-          },
-          {
-            axis: 'listening',
-            value: 5,
-          },
-          {
-            axis: 'writing',
-            value: 5,
-          },
-          {
-            axis: 'speaking',
-            value: 4,
-          }
-        ]
-      },
-      {
-        name: 'Nikita',
-        axes: [
-          {
-            axis: 'reading',
-            value: 4,
-          },
-          {
-            axis: 'grammar',
-            value: 4,
-          },
-          {
-            axis: 'vocabulary',
-            value: 4,
-          },
-          {
-            axis: 'listening',
-            value: 4,
-          },
-          {
-            axis: 'writing',
-            value: 4,
-          },
-          {
-            axis: 'speaking',
-            value: 4,
-          }
-        ]
-      },
-      {
-        name: 'Olga',
-        axes: [
-          {
-            axis: 'reading',
-            value: 4,
-          },
-          {
-            axis: 'grammar',
-            value: 3,
-          },
-          {
-            axis: 'vocabulary',
-            value: 3,
-          },
-          {
-            axis: 'listening',
-            value: 5,
-          },
-          {
-            axis: 'writing',
-            value: 5,
-          },
-          {
-            axis: 'speaking',
-            value: 4,
-          }
-        ]
-      },
-      {
-        name: 'Tatiana',
-        axes: [
-          {
-            axis: 'reading',
-            value: 5,
-          },
-          {
-            axis: 'grammar',
-            value: 4,
-          },
-          {
-            axis: 'vocabulary',
-            value: 4,
-          },
-          {
-            axis: 'listening',
-            value: 5,
-          },
-          {
-            axis: 'writing',
-            value: 4,
-          },
-          {
-            axis: 'speaking',
-            value: 4,
-          }
-        ]
-      },
-      {
-        name: 'Yevhenii',
-        axes: [
-          {
-            axis: 'reading',
-            value: 4,
-          },
-          {
-            axis: 'grammar',
-            value: 3,
-          },
-          {
-            axis: 'vocabulary',
-            value: 3,
-          },
-          {
-            axis: 'listening',
-            value: 4,
-          },
-          {
-            axis: 'writing',
-            value: 3,
-          },
-          {
-            axis: 'speaking',
-            value: 3,
-          }
-        ]
-      },
-      {
-        name: 'Nikolay',
-        axes: [
-          {
-            axis: 'reading',
-            value: 4,
-          },
-          {
-            axis: 'grammar',
-            value: 4,
-          },
-          {
-            axis: 'vocabulary',
-            value: 3,
-          },
-          {
-            axis: 'listening',
-            value: 4,
-          },
-          {
-            axis: 'writing',
-            value: 3,
-          },
-          {
-            axis: 'speaking',
-            value: 3,
-          }
-        ]
-      },
-      {
-        name: 'Vlada',
-        axes: [
-          {
-            axis: 'reading',
-            value: 5,
-          },
-          {
-            axis: 'grammar',
-            value: 4,
-          },
-          {
-            axis: 'vocabulary',
-            value: 4,
-          },
-          {
-            axis: 'listening',
-            value: 5,
-          },
-          {
-            axis: 'writing',
-            value: 4,
-          },
-          {
-            axis: 'speaking',
-            value: 3,
-          }
-        ]
-      },
-      {
-        name: 'Sergey',
-        axes: [
-          {
-            axis: 'reading',
-            value: 4,
-          },
-          {
-            axis: 'grammar',
-            value: 3,
-          },
-          {
-            axis: 'vocabulary',
-            value: 4,
-          },
-          {
-            axis: 'listening',
-            value: 4,
-          },
-          {
-            axis: 'writing',
-            value: 3,
-          },
-          {
-            axis: 'speaking',
-            value: 3,
-          }
-        ]
-      },
-    ]
-    const dataGoToTeam = [
-      {
-        name: 'Alexandr',
-        axes: [
-          {
-            axis: 'English',
-            value: 4,
-          },
-          {
-            axis: 'Javascript',
-            value: 4,
-          },
-          {
-            axis: 'HTML',
-            value: 5,
-          },
-          {
-            axis: 'CSS',
-            value: 5,
-          },
-          {
-            axis: 'Vue',
-            value: 4,
-          },
-          {
-            axis: 'React',
-            value: 2,
-          },
-        ]
-      },
-      {
-        name: 'Dmitriy',
-        axes: [
-          {
-            axis: 'English',
-            value: 4,
-          },
-          {
-            axis: 'Javascript',
-            value: 5,
-          },
-          {
-            axis: 'HTML',
-            value: 5,
-          },
-          {
-            axis: 'CSS',
-            value: 5,
-          },
-          {
-            axis: 'Vue',
-            value: 5,
-          },
-          {
-            axis: 'React',
-            value: 3,
-          },
-        ]
-      },
-      {
-        name: 'Yevhenii',
-        axes: [
-          {
-            axis: 'English',
-            value: 3,
-          },
-          {
-            axis: 'Javascript',
-            value: 3,
-          },
-          {
-            axis: 'HTML',
-            value: 4,
-          },
-          {
-            axis: 'CSS',
-            value: 5,
-          },
-          {
-            axis: 'Vue',
-            value: 2,
-          },
-          {
-            axis: 'React',
-            value: 1,
-          },
-        ]
-      },
-      {
-        name: 'Nikita',
-        axes: [
-          {
-            axis: 'English',
-            value: 4,
-          },
-          {
-            axis: 'Javascript',
-            value: 4,
-          },
-          {
-            axis: 'HTML',
-            value: 5,
-          },
-          {
-            axis: 'CSS',
-            value: 4,
-          },
-          {
-            axis: 'Vue',
-            value: 1,
-          },
-          {
-            axis: 'React',
-            value: 4,
-          },
-        ]
-      },
-      {
-        name: 'Olga',
-        axes: [
-          {
-            axis: 'English',
-            value: 4,
-          },
-          {
-            axis: 'Javascript',
-            value: 3,
-          },
-          {
-            axis: 'HTML',
-            value: 5,
-          },
-          {
-            axis: 'CSS',
-            value: 5,
-          },
-          {
-            axis: 'Vue',
-            value: 0,
-          },
-          {
-            axis: 'React',
-            value: 0,
-          },
-        ]
-      },
-      {
-        name: 'Tatiana',
-        axes: [
-          {
-            axis: 'English',
-            value: 5,
-          },
-          {
-            axis: 'Javascript',
-            value: 3,
-          },
-          {
-            axis: 'HTML',
-            value: 4,
-          },
-          {
-            axis: 'CSS',
-            value: 4,
-          },
-          {
-            axis: 'Vue',
-            value: 2,
-          },
-          {
-            axis: 'React',
-            value: 0,
-          },
-        ]
-      },
-    ]
-
-    ////// First example /////////////////////////////////////////
-    ///// (not so much options) //////////////////////////////////
-
-    const radarChartOptions = {
-      w: 290,
-      h: 350,
-      margin: margin,
-      levels: 6,
-      roundStrokes: false,
-      color: d3.scaleOrdinal(d3.schemeBlues[this.data.length]),
-      legend: { title: 'Front-end Department', translateX: 230, translateY: 40 },
-      opacityArea: 0.35, 	//The opacity of the area of the blob
-      dotRadius: 0, 			//The size of the colored circles of each blog
-      opacityCircles: 0.1, 	//The opacity of the circles of each blob
-      strokeWidth: 2, 		//The width of the stroke around each blob
-      format: '.0f'
-    };
-
-    // Draw the chart, get a reference the created svg element :
-    let svg_radar1 = this.RadarChartConstructor(".radarChart1", dataGoToTeam, radarChartOptions);
-
-    ///// Second example /////////////////////////////////////////
-    ///// Chart legend, custom color, custom unit, etc. //////////
-
-    const radarChartOptions2 = {
-      w: 290,
-      h: 350,
-      margin: margin,
-      // maxValue: 5,
-      levels: 5,
-      roundStrokes: false,
-      // color: d3.scaleOrdinal().range(colors),
-      format: '.0f',
-      legend: { title: 'English Level of Front-End Department', translateX: 230, translateY: 40 },
-      // unit: '$'
-    };
-
-    // Draw the chart, get a reference the created svg element :
-
-    // const parent_container = this.$refs.chartContainer
-    let svg_radar2 = this.RadarChartConstructor(".radarChart2", this.data, this.options);
-
-    setTimeout(() => {
-      // this.RadarChartConstructor(".radarChart2", dataGoToTeam,  this.options)
-    }, 2000)
   }
 }
 </script>
